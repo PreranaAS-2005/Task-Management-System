@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task Management System</title>
+</head>
+<body>
+
+    <center>
+        <h1>Task Management System</h1>
+        <h2>My Tasks</h2>
+
+        <form action="/add_task" method="POST">
+            <input
+                type="text"
+                name="task"
+                placeholder="Enter a new task"
+            >
+            <button type="submit">Add Task</button>
+        </form>
+
+        <hr>
+
+        {% if tasks %}
+            {% for task in tasks %}
+
+                <p>
+                    {% if task.completed %}
+                        <del>{{ task.name }}</del>
+                        (Completed)
+                    {% else %}
+                        {{ task.name }}
+                    {% endif %}
+                </p>
+
+                <form
+                    action="/complete_task/{{ task.id }}"
+                    method="POST"
+                    style="display: inline;"
+                >
+                    <button type="submit">
+                        {% if task.completed %}
+                            Mark Incomplete
+                        {% else %}
+                            Complete
+                        {% endif %}
+                    </button>
+                </form>
+
+                <form
+                    action="/delete_task/{{ task.id }}"
+                    method="POST"
+                    style="display: inline;"
+                >
+                    <button type="submit">Delete</button>
+                </form>
+
+                <hr>
+
+            {% endfor %}
+        {% else %}
+            <p>No tasks available.</p>
+        {% endif %}
+
+        <p>
+            <a href="/">Back to Login</a>
+        </p>
+    </center>
+
+</body>
+</html>
